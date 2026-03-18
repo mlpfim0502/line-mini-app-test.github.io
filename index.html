@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>NTU Med Quiz Test</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            background-color: #00B900; /* LINE Green */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Hello, NTU Med! 🩺</h2>
+        <p id="status">Loading LIFF...</p>
+        <p id="user-name"></p>
+        <button onclick="liff.closeWindow()">Close App</button>
+    </div>
+
+    <script>
+        async function main() {
+            // 1. Initialize LIFF (Replace with your LIFF ID from Console)
+            await liff.init({ liffId: "2009523544" });
+
+            if (liff.isLoggedIn()) {
+                const profile = await liff.getProfile();
+                document.getElementById('status').innerText = "Successfully Logged In!";
+                document.getElementById('user-name').innerText = "Welcome, " + profile.displayName;
+            } else {
+                document.getElementById('status').innerText = "Not Logged In";
+                liff.login(); // This will trigger the LINE login screen
+            }
+        }
+        main();
+    </script>
+</body>
+</html>
